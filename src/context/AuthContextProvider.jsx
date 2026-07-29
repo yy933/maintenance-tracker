@@ -69,9 +69,31 @@ export default function AuthContextProvider({ children }) {
       };
     }
   };
+
+  // sign-out
+  const signOutUser = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      // supabase error
+      if (error) {
+        return { success: false, error: error.message };
+      }
+      // success
+      console.log("Supabase sign-out success");
+      return { success: true };
+    } catch (error) {
+      console.error("Unexpected error during sign-out: ", error.message);
+      return {
+        success: false,
+        error: "An unexpected error occurred. Please try again.",
+      };
+    }
+  };
   return (
-    <AuthContext.Provider value={{ session, loading, profile, signInUser }}>
-      {children}
+    <AuthContext.Provider
+      value={{ session, loading, profile, signInUser, signOutUser }}
+    >
+      {!loading && children}
     </AuthContext.Provider>
   );
 }
