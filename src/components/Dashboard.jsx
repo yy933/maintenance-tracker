@@ -1,3 +1,9 @@
+import { ModeToggle } from "./ModeToggle";
 export default function Dashboard() {
-  return <h1>Dashboard</h1>;
+  return (
+    <>
+      <ModeToggle />
+      <h1>Dashboard</h1>
+    </>
+  );
 }
