@@ -13,7 +13,7 @@
   - [x] `repair_tickets` INSERT: Authenticated users only (`user_id` bound to `auth.uid()`)
   - [x] `repair_tickets` UPDATE: Users edit own pending tickets; Admins update any ticket status
 - [ ] **Frontend Initialization**
-  - [ ] Initialize Vite + React + Tailwind CSS + shadcn/ui
+  - [x] Initialize Vite + React + Tailwind CSS + shadcn/ui
   - [x] Install `@supabase/supabase-client` & configure `.env`
 
 ### Session 2: AuthContext & Essential Pages
