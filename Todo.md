@@ -17,8 +17,8 @@
   - [x] Install `@supabase/supabase-client` & configure `.env`
 
 ### Session 2: AuthContext & Essential Pages
-- [ ] **Implement AuthContext**
-  - [ ] Encapsulate `session` and `user_profiles` fetching logic
+- [x] **Implement AuthContext**
+  - [x] Encapsulate `session` and `user_profiles` fetching logic
 - [ ] **Login / Signup Pages**
   - [ ] Build auth form using shadcn/ui (`Card`, `Input`, `Button`)
 - [ ] **Test RLS Enforcement**

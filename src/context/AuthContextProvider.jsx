@@ -22,29 +22,27 @@ export default function AuthContextProvider({ children }) {
     }
   };
 
-  // get session on first render
+  
   useEffect(() => {
-    const getInitialSession = async () => {
-      try {
-        // get session from supabase
-        const { data, error } = await supabase.auth.getSession();
-
-        // throw supabase error if no session
-        if (error) throw error;
-        // setSession if no error
-        setSession(data.session);
-        // fetch user profile
-        if (data.session?.user) {
-          await fetchProfile(data.session.user.id);
-        }
-      } catch (error) {
-        console.error("Auth init error: ", error);
-      } finally {
-        setLoading(false);
+    // listen for auth changes (including initial load, signin, signout)
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, currentSession) => {
+      setSession(currentSession);
+      // fetch user profile when auth user login 
+      if (currentSession?.user) {
+        fetchProfile(currentSession.user.id);
+      } else {
+        // reset profile when auth user logout
+        setProfile(null);
       }
-    };
+      setLoading(false);
+    });
 
-    getInitialSession();
+    // cleanup: unsubscribe when unmount
+    return () => {
+      subscription?.unsubscribe();
+    };
   }, []);
   return (
     <AuthContext.Provider value={{ session, loading, profile }}>
