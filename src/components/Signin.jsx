@@ -1,5 +1,6 @@
 import { GalleryVerticalEnd } from "lucide-react";
 import { LoginForm } from "@/components/ui/login-form";
+
 export default function Signin() {
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
