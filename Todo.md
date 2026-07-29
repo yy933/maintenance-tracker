@@ -21,8 +21,8 @@
   - [x] Encapsulate `session` and `user_profiles` fetching logic
 - [x] **Login / Signup Pages**
   - [x] Build auth form using shadcn/ui (`Card`, `Input`, `Button`)
-- [ ] **Test RLS Enforcement**
-  - [ ] Register two distinct roles (`user` & `admin`) to verify access control flow
+- [x] **Test RLS Enforcement**
+  - [x] Register two distinct roles (`user` & `admin`) to verify access control flow
 
 ---
 

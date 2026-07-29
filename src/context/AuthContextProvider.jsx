@@ -22,14 +22,13 @@ export default function AuthContextProvider({ children }) {
     }
   };
 
-  
   useEffect(() => {
     // listen for auth changes (including initial load, signin, signout)
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, currentSession) => {
       setSession(currentSession);
-      // fetch user profile when auth user login 
+      // fetch user profile when auth user login
       if (currentSession?.user) {
         fetchProfile(currentSession.user.id);
       } else {
@@ -44,8 +43,34 @@ export default function AuthContextProvider({ children }) {
       subscription?.unsubscribe();
     };
   }, []);
+
+  // sign-in
+  const signInUser = async (email, password) => {
+    try {
+      // supabase sign-in
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email.toLowerCase(),
+        password,
+      });
+
+      // supabase error
+      if (error) {
+        return { success: false, error: error.message };
+      }
+
+      // success
+      console.log("Supabase sign-in success: ", data);
+      return { success: true, data };
+    } catch (error) {
+      console.error("Unexpected error during sign-in: ", error.message);
+      return {
+        success: false,
+        error: "An unexpected error occurred. Please try again.",
+      };
+    }
+  };
   return (
-    <AuthContext.Provider value={{ session, loading, profile }}>
+    <AuthContext.Provider value={{ session, loading, profile, signInUser }}>
       {children}
     </AuthContext.Provider>
   );

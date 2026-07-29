@@ -9,10 +9,23 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
+import { AlertCircle } from "lucide-react";
 
-export function LoginForm({ className, ...props }) {
+export function LoginForm({
+  className,
+  submitAction,
+  pending,
+  error,
+  ...props
+}) {
+  const isInvalid = Boolean(error);
   return (
-    <form className={cn("flex flex-col gap-6", className)} {...props}>
+    <form
+      action={submitAction}
+      className={cn("flex flex-col gap-6", className)}
+      noValidate
+      {...props}
+    >
       <FieldGroup>
         <div className="flex flex-col items-center gap-1 text-center">
           <h1 className="text-2xl font-bold">Login to your account</h1>
@@ -20,9 +33,28 @@ export function LoginForm({ className, ...props }) {
             Enter your email below to login to your account
           </p>
         </div>
+        {error && (
+          <div
+            id="signin-error"
+            role="alert"
+            aria-live="polite"
+            className="flex items-center gap-2 rounded-md bg-destructive/15 p-3 text-sm font-medium text-destructive dark:bg-destructive/30"
+          >
+            <AlertCircle className="size-4 shrink-0" />
+            <span>{error.message || error}</span>
+          </div>
+        )}
         <Field>
           <FieldLabel htmlFor="email">Email</FieldLabel>
-          <Input id="email" type="email" placeholder="m@example.com" required />
+          <Input
+            id="email"
+            type="email"
+            name="email"
+            placeholder="m@example.com"
+            required
+            aria-invalid={isInvalid}
+            aria-describedby={isInvalid ? "signin-error" : undefined}
+          />
         </Field>
         <Field>
           <div className="flex items-center">
@@ -34,10 +66,19 @@ export function LoginForm({ className, ...props }) {
               Forgot your password?
             </a>
           </div>
-          <Input id="password" type="password" required />
+          <Input
+            id="password"
+            type="password"
+            name="password"
+            required
+            aria-invalid={isInvalid}
+            aria-describedby={isInvalid ? "signin-error" : undefined}
+          />
         </Field>
         <Field>
-          <Button type="submit">Login</Button>
+          <Button type="submit" disabled={pending}>
+            {pending ? "Logging in..." : "Login"}
+          </Button>
         </Field>
         <FieldSeparator>Or continue with</FieldSeparator>
         <Field>
