@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,34 +14,25 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import {
-  ChevronsUpDownIcon,
-  SparklesIcon,
-  BadgeCheckIcon,
-  CreditCardIcon,
-  BellIcon,
-  LogOutIcon,
-} from "lucide-react";
-
+import { ChevronsUpDownIcon, BadgeCheckIcon, LogOutIcon } from "lucide-react";
 
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/components/ui/toast";
+import { getInitials } from "@/lib/utils";
 
-export function NavUser({ user }) {
+export function NavUser() {
   const { isMobile } = useSidebar();
-  const { signOutUser } = useAuth();
+  const { signOutUser, user } = useAuth();
   const navigate = useNavigate();
-
 
   const handleSignOut = async (e) => {
     e.preventDefault();
     const { success, error } = await signOutUser();
-   
+
     if (success) {
       navigate("/signin", { replace: true });
     } else {
-      
       console.error("Sign out error:", error);
       toast.add({
         title: "Sign out failed",
@@ -49,8 +40,6 @@ export function NavUser({ user }) {
       });
     }
   };
-
-  
 
   return (
     <SidebarMenu>
@@ -62,8 +51,7 @@ export function NavUser({ user }) {
             }
           >
             <Avatar>
-              <AvatarImage src={user?.avatar} alt={user?.name} />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarFallback>{getInitials(user?.name)}</AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
               <span className="truncate font-medium">{user?.name}</span>
@@ -81,8 +69,7 @@ export function NavUser({ user }) {
               <DropdownMenuLabel className="p-0 font-normal">
                 <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                   <Avatar>
-                    <AvatarImage src={user?.avatar} alt={user?.name} />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarFallback>{getInitials(user?.name)}</AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-medium">{user?.name}</span>
@@ -92,30 +79,15 @@ export function NavUser({ user }) {
               </DropdownMenuLabel>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <SparklesIcon />
-                Upgrade to Pro
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
+
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <BadgeCheckIcon />
                 Account
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCardIcon />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <BellIcon />
-                Notifications
-              </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
 
-            {/* 3. 在選單項目的 onClick 綁定 handleSignOut */}
             <DropdownMenuItem
               onClick={handleSignOut}
               className="cursor-pointer text-destructive focus:text-destructive"

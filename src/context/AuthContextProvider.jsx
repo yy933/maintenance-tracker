@@ -16,6 +16,7 @@ export default function AuthContextProvider({ children }) {
         .single(); // return single object
       if (error) throw error;
       setProfile(data);
+      console.log("Fetch user profile success: ", data)
     } catch (error) {
       console.error("Fetch user profile error: ", error.message);
       setProfile(null);
@@ -89,9 +90,17 @@ export default function AuthContextProvider({ children }) {
       };
     }
   };
+
+  const user = session?.user
+    ? {
+        id: session.user.id,
+        email: session.user.email, 
+        name: profile?.name || session.user.email.split("@")[0], 
+      }
+    : null;
   return (
     <AuthContext.Provider
-      value={{ session, loading, profile, signInUser, signOutUser }}
+      value={{ session, loading, profile, user, signInUser, signOutUser }}
     >
       {!loading && children}
     </AuthContext.Provider>
