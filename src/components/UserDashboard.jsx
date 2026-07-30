@@ -15,7 +15,7 @@ export default function UserDashboard() {
       });
       navigate(`/dashboard/${user.id}`);
     }
-  });
+  }, [user?.id, userId, navigate]);
   // if user id not match, return null (prevent flashing during redirect)
   if (user?.id !== userId) {
     return null;

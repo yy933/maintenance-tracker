@@ -1,79 +1,46 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import { NavMain } from "@/components/nav-main"
-import { NavUser } from "@/components/nav-user"
-import { SidebarHeaderRole } from "@/components/siderbar-header-role"
+import { NavMain } from "@/components/nav-main";
+import { NavUser } from "@/components/nav-user";
+import { SidebarHeaderRole } from "@/components/siderbar-header-role";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import { GalleryVerticalEndIcon, AudioLinesIcon, TerminalIcon, TerminalSquareIcon } from "lucide-react"
+} from "@/components/ui/sidebar";
+import { Gauge } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
-// This is sample data.
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: (
-        <GalleryVerticalEndIcon />
-      ),
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: (
-        <AudioLinesIcon />
-      ),
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: (
-        <TerminalIcon />
-      ),
-      plan: "Free",
-    },
-  ],
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "#",
-      icon: (
-        <TerminalSquareIcon />
-      ),
-      isActive: true,
-      items: [
+export function AppSidebar({ ...props }) {
+  const { user } = useAuth();
+  const userId = user?.id ?? "";
+  const data = React.useMemo(
+    () => ({
+      navMain: [
         {
-          title: "History",
+          title: "Dashboard",
           url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
+          icon: <Gauge />,
+          isActive: true,
+          items: [
+            {
+              title: "Overview",
+              url: "/dashboard",
+            },
+            {
+              title: "Personal",
+              url: userId ? `/dashboard/${userId}` : "/dashboard",
+            },
+          ],
         },
       ],
-    },
-    
-  ]
-}
-
-export function AppSidebar({
-  ...props
-}) {
+    }),
+    [userId],
+  );
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -81,7 +48,6 @@ export function AppSidebar({
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
