@@ -80,6 +80,8 @@ export default function AuthContextProvider({ children }) {
         return { success: false, error: error.message };
       }
       // success
+      setSession(null);
+      setProfile(null);
       console.log("Supabase sign-out success");
       return { success: true };
     } catch (error) {
