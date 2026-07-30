@@ -1,4 +1,3 @@
-// components/MainLayout.jsx
 import { Outlet, Navigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth"; 
 import { AppSidebar } from "@/components/app-sidebar";

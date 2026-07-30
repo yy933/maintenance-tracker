@@ -4,6 +4,7 @@ import Signup from "./components/Signup";
 import Dashboard from "./components/Dashboard";
 import RootRedirect from "./routes/RootRedirect";
 import MainLayout from "./components/layout/MainLayout";
+import UserDashboard from "./components/UserDashboard";
 import { Navigate } from "react-router-dom";
 
 export const router = createBrowserRouter([
@@ -27,10 +28,10 @@ export const router = createBrowserRouter([
         path: "dashboard",
         element: <Dashboard />,
       },
-      // {
-      //   path: "dashboard/:userId", 
-      //   element: <UserDashboard />,
-      // },
+      {
+        path: "dashboard/:userId", 
+        element: <UserDashboard />,
+      },
     ],
   },
   // unknown paths (redirect to home)
