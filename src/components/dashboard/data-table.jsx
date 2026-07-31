@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import {
   flexRender,
@@ -24,6 +23,12 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
+import {
+  statusMap,
+  priorityMap,
+  getStatusObj,
+  getPriorityObj,
+} from "./columns";
 
 export function DataTable({ columns, data }) {
   const [globalFilter, setGlobalFilter] = React.useState("");
@@ -95,7 +100,7 @@ export function DataTable({ columns, data }) {
                   colSpan={columns.length}
                   className="h-24 text-center text-muted-foreground"
                 >
-                  No data 
+                  No data
                 </TableCell>
               </TableRow>
             )}
@@ -114,8 +119,9 @@ export function DataTable({ columns, data }) {
               {selectedTicket?.title}
             </DialogTitle>
             <DialogDescription>
-               Created by {selectedTicket?.user_profiles?.full_name || "unknown user"} at {" "}
-              {new Date(selectedTicket?.created_at).toLocaleString()} 
+              Created by{" "}
+              {selectedTicket?.user_profiles?.full_name || "unknown user"} at{" "}
+              {new Date(selectedTicket?.created_at).toLocaleString()}
             </DialogDescription>
           </DialogHeader>
 
@@ -125,8 +131,16 @@ export function DataTable({ columns, data }) {
                 Status / Priority
               </h4>
               <div className="flex gap-2">
-                <Badge>{selectedTicket?.status}</Badge>
-                <Badge variant="outline">{selectedTicket?.priority}</Badge>
+                <Badge
+                  className={getStatusObj(selectedTicket?.status)?.className}
+                >
+                  {getStatusObj(selectedTicket?.status)?.label}
+                </Badge>
+                <Badge
+                  className={getPriorityObj(selectedTicket?.priority)?.className}
+                >
+                  {getPriorityObj(selectedTicket?.priority)?.label}
+                </Badge>
               </div>
             </div>
 

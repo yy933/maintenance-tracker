@@ -14,7 +14,7 @@ const formatDate = (dateString) => {
 };
 
 // Status color map
-const statusMap = {
+export const statusMap = {
   pending: {
     label: "Pending",
     className:
@@ -32,7 +32,7 @@ const statusMap = {
 };
 
 // Priority color map
-const priorityMap = {
+export const priorityMap = {
   high: {
     label: "High",
     className: "bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300",
@@ -48,6 +48,19 @@ const priorityMap = {
       "bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300",
   },
 };
+
+// helpers for status and priority map
+export const getStatusObj = (status) =>
+  statusMap[status] || {
+    label: status || "-",
+    className: "bg-muted text-muted-foreground",
+  };
+
+export const getPriorityObj = (priority) =>
+  priorityMap[priority] || {
+    label: priority || "-",
+    className: "bg-muted text-muted-foreground",
+  };
 
 export const columns = [
   {
