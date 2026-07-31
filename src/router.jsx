@@ -4,7 +4,7 @@ import Signup from "./components/Signup";
 import Dashboard from "./components/dashboard/Dashboard";
 import RootRedirect from "./routes/RootRedirect";
 import MainLayout from "./components/layout/MainLayout";
-import UserDashboard from "./components/UserDashboard";
+import UserDashboard from "./components/user-dashboard/UserDashboard";
 import { Navigate } from "react-router-dom";
 
 export const router = createBrowserRouter([
@@ -29,7 +29,7 @@ export const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: "dashboard/:userId", 
+        path: "dashboard/:userId",
         element: <UserDashboard />,
       },
     ],

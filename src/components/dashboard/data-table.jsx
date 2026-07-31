@@ -24,8 +24,6 @@ import {
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import {
-  statusMap,
-  priorityMap,
   getStatusObj,
   getPriorityObj,
 } from "./columns";
