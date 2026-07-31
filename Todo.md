@@ -33,8 +33,8 @@
   - [ ] Embed form inside a shadcn `Dialog` (Modal)
   - [ ] Auto-bind `user_id` to current authenticated user
 - [ ] **Tickets Table**
-  - [ ] Render tickets list using shadcn `Table`
-  - [ ] Display ticket status using shadcn `Badge` (e.g., Green for "Completed", Yellow for "In Progress")
+  - [x] Render tickets list using shadcn `Table`
+  - [x] Display ticket status using shadcn `Badge` (e.g., Green for "Completed", Yellow for "In Progress")
 - [ ] **Role-Based UI Control**
   - [ ] **User View**: View own tickets only + "Create Ticket" button
   - [ ] **Admin View**: View all tickets + inline status toggle (`Select` component for Pending -> In Progress -> Completed)
