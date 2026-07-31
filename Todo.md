@@ -32,7 +32,7 @@
 - [ ] **Create Ticket Form**
   - [ ] Embed form inside a shadcn `Dialog` (Modal)
   - [ ] Auto-bind `user_id` to current authenticated user
-- [ ] **Tickets Table**
+- [x] **Tickets Table**
   - [x] Render tickets list using shadcn `Table`
   - [x] Display ticket status using shadcn `Badge` (e.g., Green for "Completed", Yellow for "In Progress")
 - [ ] **Role-Based UI Control**

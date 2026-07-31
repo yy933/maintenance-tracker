@@ -34,6 +34,24 @@ export default function Dashboard() {
     }
 
     fetchTickets();
+
+    const channel = supabase
+      .channel("repair-tickets-change")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "repair_tickets" },
+        (payload) => {
+          console.log("Change received: ", payload);
+          fetchTickets();
+        },
+      )
+      .subscribe((status) =>
+        console.log("Subscibed to repair_tickets changes: ", status),
+      );
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   if (loading) {
