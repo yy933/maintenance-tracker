@@ -28,31 +28,16 @@ export function TicketFormDialog({
   isAdmin = false,
   onSuccess,
 }) {
-  const isEditing = !!initialData;
+  const isEditing = !!initialData; // turn into boolean
   const [loading, setLoading] = useState(false);
 
   // form state
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [status, setStatus] = useState("pending");
-  const [priority, setPriority] = useState("medium");
+ const [title, setTitle] = useState(initialData?.title || "");
+ const [description, setDescription] = useState(initialData?.description || "");
+ const [status, setStatus] = useState(initialData?.status || "pending");
+ const [priority, setPriority] = useState(initialData?.priority || "medium");
 
-  // initialization
-  useEffect(() => {
-    if (initialData) {
-      // Edit existing ticket
-      setTitle(initialData.title || "");
-      setDescription(initialData.description || "");
-      setStatus(initialData.status || "pending");
-      setPriority(initialData.priority || "medium");
-    } else {
-      // Add new ticket (reset the form)
-      setTitle("");
-      setDescription("");
-      setStatus("pending");
-      setPriority("medium");
-    }
-  }, [initialData, open]);
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -88,12 +73,12 @@ export function TicketFormDialog({
 
         if (error) throw error;
       } else {
-        // 新增模式
+        // add new ticket mode
         const { error } = await supabase.from("repair_tickets").insert([
           {
             title,
             description,
-            status: "pending", // User 新增預設 pending
+            status: "pending", // default status: pending
             priority,
             user_id: userId,
           },

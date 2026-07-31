@@ -198,6 +198,7 @@ export default function UserDashboard() {
       {/* Form Modal */}
       {user?.id && (
         <TicketFormDialog
+          key={editingTicket ? editingTicket.id : `new-ticket-${isFormOpen}`} // refresh modal on edit mode (based on different ticket id)
           open={isFormOpen}
           onOpenChange={setIsFormOpen}
           initialData={editingTicket}
