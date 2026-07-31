@@ -5,7 +5,8 @@ CREATE TABLE public.user_profiles (
   id UUID REFERENCES auth.users ON DELETE CASCADE PRIMARY KEY,
   name TEXT NOT NULL,
   role TEXT CHECK (role IN ('user', 'admin')) DEFAULT 'user',
-  created_at TIMESTAMPTZ DEFAULT NOW()
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 -- Enable RLS on user_profiles 
@@ -31,6 +32,23 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 CREATE OR REPLACE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+
+  -- 2-1. Create Trigger Function for updated_at column
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+   NEW.updated_at = NOW();
+   RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+-- 2-2. Create Trigger on repair_tickets
+DROP TRIGGER IF EXISTS set_repair_tickets_updated_at ON public.repair_tickets;
+
+CREATE TRIGGER set_repair_tickets_updated_at
+BEFORE UPDATE ON public.repair_tickets
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at_column();
 
 -- ==========================================
 -- 3. Create repair_tickets table
@@ -99,11 +117,11 @@ CREATE POLICY "Users update own pending tickets, Admins update any"
 
 -- 5-4. DELETE policy (DELETE)
 -- User can only delete their own tickets, while admin can delete any
-CREATE POLICY "Users delete own tickets, Admins delete any"
+CREATE POLICY "Users delete own pending tickets, Admins delete any"
   ON public.repair_tickets FOR DELETE
   TO authenticated
   USING (
-    auth.uid() = user_id 
+    (auth.uid() = user_id AND status = 'pending') 
     OR 
     EXISTS (
       SELECT 1 FROM public.user_profiles
