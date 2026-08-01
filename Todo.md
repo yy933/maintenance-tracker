@@ -52,8 +52,8 @@
   ### Playwright Testing Implementation Todo List
 
 - [ ] **1. Environment Setup & Dependency Installation**
-  - [ ] Install Playwright and `@supabase/supabase-js`
-  - [ ] Configure `playwright.config.js` (Base URL, web server auto-start, environment variables)
+  - [x] Install Playwright and `@supabase/supabase-js`
+  - [x] Configure `playwright.config.js` (Base URL, web server auto-start, environment variables)
 - [ ] **2. Test Environment Helpers & Setup**
   - [ ] Configure `.env.test` or environment variables for test accounts and Supabase credentials
   - [ ] Implement Supabase API authentication helper functions (Quickly initialize authenticated Supabase clients)
