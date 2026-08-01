@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { TicketCard } from "@/components/user-dashboard/TicketCard";
 import { TicketFormDialog } from "@/components/user-dashboard/TicketFormDialog";
 import { Plus } from "lucide-react";
+import { useRealtimeSubscription } from "../../hooks/useRealtimeSubscription";
 
 export default function UserDashboard() {
   const { userId } = useParams();
@@ -96,21 +97,18 @@ export default function UserDashboard() {
     };
     initData();
 
-    // Subscribe to Supabase Realtime 
-    const channel = supabase
-      .channel(`user-tickets-${user.id}`)
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "repair_tickets" },
-        () => fetchTickets(),
-      )
-      .subscribe();
-
     return () => {
       isMounted = false;
-      supabase.removeChannel(channel);
     };
   }, [user?.id, fetchTickets]);
+
+  // Subscribe to Supabase Realtime
+  useRealtimeSubscription({
+    channelName: `user-tickets-${user?.id}`,
+    table: "repair_tickets",
+    enabled: !!user?.id,
+    onDataChange: fetchTickets,
+  });
 
   // Delete ticket handler
   const handleDelete = async (ticketId) => {

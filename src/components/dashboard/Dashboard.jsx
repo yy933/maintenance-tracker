@@ -1,58 +1,44 @@
-// routes/Dashboard.jsx
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import supabase from "../../supabase/supabase-client";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
+import { useRealtimeSubscription } from "../../hooks/useRealtimeSubscription";
 
 export default function Dashboard() {
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    async function fetchTickets() {
-      try {
-        // Get name by using foreign key and join user_profiles table
-        const { data, error } = await supabase
-          .from("repair_tickets")
-          .select(
-            `
-            *,
-            user_profiles (
-              name
-            )
-          `,
-          )
-          .order("created_at", { ascending: false });
+  const fetchTickets = useCallback(async () => {
+    try {
+      const { data, error } = await supabase
+        .from("repair_tickets")
+        .select(`*, user_profiles ( name )`)
+        .order("created_at", { ascending: false });
 
-        if (error) throw error;
-        setTickets(data || []);
-      } catch (err) {
-        console.error("Error fetching tickets:", err.message);
-      } finally {
-        setLoading(false);
-      }
+      if (error) throw error;
+      setTickets(data || []);
+    } catch (err) {
+      console.error("Error fetching tickets:", err.message);
+    } finally {
+      setLoading(false);
     }
-
-    fetchTickets();
-
-    const channel = supabase
-      .channel("repair-tickets-change")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "repair_tickets" },
-        (payload) => {
-          console.log("Change received: ", payload);
-          fetchTickets();
-        },
-      )
-      .subscribe((status) =>
-        console.log("Subscibed to repair_tickets changes: ", status),
-      );
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
   }, []);
+
+  // Initial fetch
+  useEffect(() => {
+    const initData = async () => {
+      await fetchTickets();
+    };
+
+    initData();
+  }, [fetchTickets]);
+
+  // Subscribe to Supabase Realtime
+  useRealtimeSubscription({
+    channelName: "repair-tickets-change",
+    table: "repair_tickets",
+    onDataChange: fetchTickets,
+  });
 
   if (loading) {
     return <div className="p-4 text-muted-foreground ">Loading data...</div>;
