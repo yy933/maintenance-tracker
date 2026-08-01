@@ -29,19 +29,19 @@
 ## Core Features, UI Integration & E2E Testing 
 
 ### Session 1: Feature Implementation & UI Integration 
-- [ ] **Create Ticket Form**
-  - [ ] Embed form inside a shadcn `Dialog` (Modal)
-  - [ ] Auto-bind `user_id` to current authenticated user
+- [x] **Create Ticket Form**
+  - [x] Embed form inside a shadcn `Dialog` (Modal)
+  - [x] Auto-bind `user_id` to current authenticated user
 - [x] **Tickets Table**
   - [x] Render tickets list using shadcn `Table`
   - [x] Display ticket status using shadcn `Badge` (e.g., Green for "Completed", Yellow for "In Progress")
-- [ ] **Role-Based UI Control**
-  - [ ] **User View**: View own tickets only + "Create Ticket" button
-  - [ ] **Admin View**: View all tickets + inline status toggle (`Select` component for Pending -> In Progress -> Completed)
+- [x] **Role-Based UI Control**
+  - [x] **User View**: View own tickets only + "Create Ticket" button
+  - [x] **Admin View**: View all tickets + inline status toggle (`Select` component for Pending -> In Progress -> Completed)
 
 ### Session 2: Analytics, Testing & Deployment 
-- [ ] **Dashboard Metric Cards**
-  - [ ] Display ticket metrics using shadcn `Card`: "Pending", "In Progress", "Completed"
+- [x] **Dashboard Metric Cards**
+  - [x] Display ticket metrics using shadcn `Card`: "Pending", "In Progress", "Completed"
   - [ ] Calculate counts via Supabase aggregate queries or client-side filtering
 - [ ] **End-to-End (E2E) Flow Testing**
   - [ ] Verify full workflow: User creates ticket ➔ Admin updates status ➔ User sees real-time updates

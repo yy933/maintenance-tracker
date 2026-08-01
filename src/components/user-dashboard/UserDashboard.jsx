@@ -83,12 +83,20 @@ export default function UserDashboard() {
     }
   }, [currentUserId, isAdmin]);
 
-  // 3. Setup Realtime listener
+  // 3. Setup Realtime listener & initial fetch
   useEffect(() => {
     if (!user?.id) return;
 
-    fetchTickets();
+    // wrap fetchTickets during first render in an async function to avoid race condition
+    let isMounted = true;
+    const initData = async () => {
+      if (isMounted) {
+        await fetchTickets();
+      }
+    };
+    initData();
 
+    // Subscribe to Supabase Realtime 
     const channel = supabase
       .channel(`user-tickets-${user.id}`)
       .on(
@@ -99,6 +107,7 @@ export default function UserDashboard() {
       .subscribe();
 
     return () => {
+      isMounted = false;
       supabase.removeChannel(channel);
     };
   }, [user?.id, fetchTickets]);
