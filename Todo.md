@@ -44,7 +44,7 @@
   - [x] Display ticket metrics using shadcn `Card`: "Pending", "In Progress", "Completed"
   - [ ] Calculate counts via Supabase aggregate queries or client-side filtering
 - [ ] **End-to-End (E2E) Flow Testing** (Refer to **Playwright Testing Implementation Todo List** below)
-  - [ ] Verify full workflow: User creates ticket ➔ Admin updates status ➔ User sees real-time updates
+  - [x] Verify full workflow: User creates ticket ➔ Admin updates status ➔ User sees real-time updates
   - [ ] Test privilege escalation resistance (Verify unauthorized API mutations are blocked by RLS)
 - [ ] **Deployment (Optional)**
   - [ ] Deploy frontend to Vercel or Netlify
@@ -57,12 +57,12 @@
 - [ ] **2. Test Environment Helpers & Setup**
   - [ ] Configure `.env.test` or environment variables for test accounts and Supabase credentials
   - [ ] Implement Supabase API authentication helper functions (Quickly initialize authenticated Supabase clients)
-- [ ] **3. Task 1: End-to-End (E2E) Realtime Workflow Testing**
-  - [ ] Simulate dual browser contexts (User context & Admin context simultaneously)
-  - [ ] User logs in and submits form to create a repair ticket (`repair_tickets`)
-  - [ ] Admin logs into the dashboard and verifies receipt of the new ticket
-  - [ ] Admin updates ticket status to `In Progress`
-  - [ ] **Critical Verification**: Verify User UI automatically updates to `In Progress` in real-time without manual refresh (F5)
+- [x] **3. Task 1: End-to-End (E2E) Realtime Workflow Testing**
+  - [x] Simulate dual browser contexts (User context & Admin context simultaneously)
+  - [x] User logs in and submits form to create a repair ticket (`repair_tickets`)
+  - [x] Admin logs into the dashboard and verifies receipt of the new ticket
+  - [x] Admin updates ticket status to `In Progress`
+  - [x] **Critical Verification**: Verify User UI automatically updates to `In Progress` in real-time without manual refresh (F5)
 - [ ] **4. Task 2: Privilege Escalation Resistance & RLS Security API Testing**
   - [ ] **Test 1 (Cross-Tenant Mutation)**: User A attempts to update User B's ticket via API ➔ Verify `affected_rows` count is `0`
   - [ ] **Test 2 (Unauthorized Status Change)**: User attempts to update their own ticket status to an admin-only state (e.g., `Resolved`) via API ➔ Verify request is rejected/blocked
