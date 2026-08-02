@@ -63,7 +63,7 @@
   - [x] Admin logs into the dashboard and verifies receipt of the new ticket
   - [x] Admin updates ticket status to `In Progress`
   - [x] **Critical Verification**: Verify User UI automatically updates to `In Progress` in real-time without manual refresh (F5)
-- [ ] **4. Task 2: Privilege Escalation Resistance & RLS Security API Testing**
-  - [ ] **Test 1 (Cross-Tenant Mutation)**: User A attempts to update User B's ticket via API ➔ Verify `affected_rows` count is `0`
-  - [ ] **Test 2 (Unauthorized Status Change)**: User attempts to update their own ticket status to an admin-only state (e.g., `Resolved`) via API ➔ Verify request is rejected/blocked
-  - [ ] **Test 3 (Role Escalation)**: User attempts to mutate their own `user_profiles.role` to `admin` via API ➔ Verify request is rejected/blocked
+- [x] **4. Task 2: Privilege Escalation Resistance & RLS Security API Testing**
+  - [x] **Test 1 (Cross-Tenant Mutation)**: User A attempts to update User B's ticket via API ➔ Verify `affected_rows` count is `0`
+  - [x] **Test 2 (Unauthorized Status Change)**: User attempts to update their own ticket status to an admin-only state (e.g., `Resolved`) via API ➔ Verify request is rejected/blocked
+  - [x] **Test 3 (Role Escalation)**: User attempts to mutate their own `user_profiles.role` to `admin` via API ➔ Verify request is rejected/blocked
