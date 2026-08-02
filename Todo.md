@@ -43,11 +43,12 @@
 - [x] **Dashboard Metric Cards**
   - [x] Display ticket metrics using shadcn `Card`: "Pending", "In Progress", "Completed"
   - [ ] Calculate counts via Supabase aggregate queries or client-side filtering
-- [ ] **End-to-End (E2E) Flow Testing** (Refer to **Playwright Testing Implementation Todo List** below)
+- [x] **End-to-End (E2E) Flow Testing** (Refer to **Playwright Testing Implementation Todo List** below)
   - [x] Verify full workflow: User creates ticket ➔ Admin updates status ➔ User sees real-time updates
-  - [ ] Test privilege escalation resistance (Verify unauthorized API mutations are blocked by RLS)
+  - [x] Test privilege escalation resistance (Verify unauthorized API mutations are blocked by RLS)
 - [ ] **Deployment (Optional)**
   - [ ] Deploy frontend to Vercel or Netlify
+
 
   ### Playwright Testing Implementation Todo List
 
