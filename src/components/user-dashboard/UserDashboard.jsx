@@ -171,7 +171,11 @@ export default function UserDashboard() {
               : "Track your repair requests or submit a new ticket."}
           </p>
         </div>
-        <Button onClick={handleOpenCreate} className="flex items-center gap-2">
+        <Button
+          onClick={handleOpenCreate}
+          className="flex items-center gap-2"
+          data-testid="create-ticket-btn"
+        >
           <Plus className="h-4 w-4" /> Create Ticket
         </Button>
       </div>

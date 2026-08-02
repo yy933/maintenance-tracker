@@ -118,6 +118,7 @@ export function TicketFormDialog({
             <Input
               id="title"
               value={title}
+              name="title"
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Air conditioner is not working"
               required
@@ -166,6 +167,7 @@ export function TicketFormDialog({
             <Textarea
               id="description"
               value={description}
+              name="description"
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Please provide details about the issue..."
               rows={4}
