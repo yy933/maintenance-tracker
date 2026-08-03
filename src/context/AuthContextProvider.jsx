@@ -93,6 +93,41 @@ export default function AuthContextProvider({ children }) {
     }
   };
 
+   const signUpNewUser = async (email, password, name) => {
+     try {
+       //supabase method
+       const { data, error } = await supabase.auth.signUp({
+         email: email.toLowerCase(),
+         password,
+         options: {
+           data: {
+             name: name
+           },
+         },
+       });
+       //handle supabase error explicitly
+       if (error) {
+         return { success: false, error: error.message };
+       }
+       //success
+       console.log("supabase sign up success: ", data);
+       return {
+         success: true,
+         data,
+       };
+     } catch (error) {
+       //Unexpected error
+       console.error(
+         "unexpected error occured during sign up: ",
+         error.message,
+       );
+       return {
+         success: false,
+         error: "An unexpected error occurred. Please try again.",
+       };
+     }
+   };
+
   const user = session?.user
     ? {
         id: session.user.id,
@@ -102,7 +137,7 @@ export default function AuthContextProvider({ children }) {
     : null;
   return (
     <AuthContext.Provider
-      value={{ session, loading, profile, user, signInUser, signOutUser }}
+      value={{ session, loading, profile, user, signInUser, signOutUser, signUpNewUser }}
     >
       {!loading && children}
     </AuthContext.Provider>
