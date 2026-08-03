@@ -21,8 +21,8 @@ BEGIN
   INSERT INTO public.user_profiles (id, name, role)
   VALUES (
     NEW.id,
-    COALESCE(NEW.raw_user_meta_data->>'name', 'New user'),
-    COALESCE(NEW.raw_user_meta_data->>'role', 'user')
+    COALESCE(NULLIF(TRIM(NEW.raw_user_meta_data->>'name'), ''), 'New user'),
+    'user' -- Hard-coded account role as 'user' to prevent malicious attacks from frontend to set role as 'admin' 
   );
   RETURN NEW;
 END;
