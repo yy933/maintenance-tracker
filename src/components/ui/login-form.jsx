@@ -1,3 +1,4 @@
+import { useGoogleLogin } from "@/hooks/useGoogleLogin";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,8 +11,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 import { AlertCircle, Loader2 } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
-import { useState } from "react";
 
 export function LoginForm({
   className,
@@ -21,30 +20,10 @@ export function LoginForm({
   ...props
 }) {
   const isInvalid = Boolean(formError);
-  const { signInWithGoogle } = useAuth();
-  const [oauthError, setOauthError] = useState(null);
-  const [googleLoading, setGoogleLoading] = useState(false);
+  const { handleGoogleSignIn, oauthError, googleLoading } = useGoogleLogin();
+
   const displayError = formError?.message || formError || oauthError;
 
-  const handleGoogleSignIn = async () => {
-    try {
-      setGoogleLoading(true);
-      setOauthError(null);
-
-      const { success, error } = await signInWithGoogle();
-
-      if (!success) {
-        setOauthError(error || "Google login failed. Please try again.");
-        setGoogleLoading(false);
-        console.error("Google sign-in error:", error);
-      }
-      // Note: if success, the user will be redirected to the dashboard via the OAuth flow, so no further action is needed here.(no need to setGoogleLoading(false) in this case)
-    } catch (error) {
-      setOauthError("An unexpected error occurred.");
-      setGoogleLoading(false);
-      console.error("Unexpected error during Google sign-in: ", error);
-    }
-  };
   return (
     <form
       action={submitAction}
