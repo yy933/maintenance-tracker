@@ -21,7 +21,11 @@ BEGIN
   INSERT INTO public.user_profiles (id, name, role)
   VALUES (
     NEW.id,
-    COALESCE(NULLIF(TRIM(NEW.raw_user_meta_data->>'name'), ''), 'New user'),
+    -- Get full_name (Google) or name (Email signup), else default to 'New User'
+    COALESCE(
+      NULLIF(TRIM(NEW.raw_user_meta_data->>'full_name'), ''),
+      NULLIF(TRIM(NEW.raw_user_meta_data->>'name'), ''),
+      'New User'),
     'user' -- Hard-coded account role as 'user' to prevent malicious attacks from frontend to set role as 'admin' 
   );
   RETURN NEW;

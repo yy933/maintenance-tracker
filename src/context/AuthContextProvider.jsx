@@ -16,7 +16,7 @@ export default function AuthContextProvider({ children }) {
         .single(); // return single object
       if (error) throw error;
       setProfile(data);
-      console.log("Fetch user profile success: ", data)
+      console.log("Fetch user profile success: ", data);
     } catch (error) {
       console.error("Fetch user profile error: ", error.message);
       setProfile(null);
@@ -71,6 +71,29 @@ export default function AuthContextProvider({ children }) {
     }
   };
 
+  // Google sign-in
+  const signInWithGoogle = async () => {
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/dashboard`,
+        },
+      });
+      if (error) {
+        return { success: false, error: error.message };
+      }
+
+      return { success: true, data };
+    } catch (error) {
+      console.error("Unexpected error during Google sign-in: ", error.message);
+      return {
+        success: false,
+        error: "An unexpected error occurred with Google login.",
+      };
+    }
+  };
+
   // sign-out
   const signOutUser = async () => {
     try {
@@ -93,51 +116,57 @@ export default function AuthContextProvider({ children }) {
     }
   };
 
-   const signUpNewUser = async (email, password, name) => {
-     try {
-       //supabase method
-       const { data, error } = await supabase.auth.signUp({
-         email: email.toLowerCase(),
-         password,
-         options: {
-           data: {
-             name: name
-           },
-         },
-       });
-       //handle supabase error explicitly
-       if (error) {
-         return { success: false, error: error.message };
-       }
-       //success
-       console.log("supabase sign up success: ", data);
-       return {
-         success: true,
-         data,
-       };
-     } catch (error) {
-       //Unexpected error
-       console.error(
-         "unexpected error occured during sign up: ",
-         error.message,
-       );
-       return {
-         success: false,
-         error: "An unexpected error occurred. Please try again.",
-       };
-     }
-   };
+  const signUpNewUser = async (email, password, name) => {
+    try {
+      //supabase method
+      const { data, error } = await supabase.auth.signUp({
+        email: email.toLowerCase(),
+        password,
+        options: {
+          data: {
+            name: name,
+          },
+        },
+      });
+      //handle supabase error explicitly
+      if (error) {
+        return { success: false, error: error.message };
+      }
+      //success
+      console.log("supabase sign up success: ", data);
+      return {
+        success: true,
+        data,
+      };
+    } catch (error) {
+      //Unexpected error
+      console.error("unexpected error occured during sign up: ", error.message);
+      return {
+        success: false,
+        error: "An unexpected error occurred. Please try again.",
+      };
+    }
+  };
 
   const user = session?.user
     ? {
         id: session.user.id,
-        email: session.user.email, 
-        name: profile?.name || session.user.email.split("@")[0], 
+        email: session.user.email,
+        name: profile?.name || session.user.email.split("@")[0],
       }
     : null;
   return (
     <AuthContext.Provider
-      value={{ session, loading, profile, user, signInUser, signOutUser, signUpNewUser }}
+      value={{
+        session,
+        loading,
+        profile,
+        user,
+        signInUser,
+        signInWithGoogle,
+        signOutUser,
+        signUpNewUser,
+      }}
     >
       {!loading && children}
     </AuthContext.Provider>
