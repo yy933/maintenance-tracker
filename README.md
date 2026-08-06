@@ -2,6 +2,13 @@
 
 Maintenance Tracker is a React + Vite web app for managing repair and maintenance requests. It gives users a simple way to submit, view, and manage tickets, while admins can oversee the full system from a central dashboard.
 
+## Live Demo
+For live demo, click [here](https://maintenance-tracker-pearl.vercel.app/).
+
+Log in with the test account below or create your own account:
+ - email: user@example.com
+ - password: user123
+
 ## What this app does
 
 - Let users sign in or create an account
