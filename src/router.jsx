@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
-import Signin from "./components/Signin";
-import Signup from "./components/Signup";
+import Signin from "./components/auth/Signin";
+import Signup from "./components/auth/Signup";
 import Dashboard from "./components/dashboard/Dashboard";
 import RootRedirect from "./routes/RootRedirect";
 import MainLayout from "./components/layout/MainLayout";

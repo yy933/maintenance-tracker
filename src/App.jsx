@@ -1,12 +1,9 @@
-import Signin from "./components/Signin";
-
+import Signin from "./components/auth/Signin";
 
 function App() {
   return (
     <>
-      
       <Signin />
-      
     </>
   );
 }

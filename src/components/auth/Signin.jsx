@@ -1,6 +1,6 @@
 import AuthLayout from "@/components/layout/AuthLayout";
 import { LoginForm } from "@/components/ui/login-form";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 import { useActionState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 

@@ -1,4 +1,4 @@
-import AuthHeader from "@/components/AuthHeader";
+import AuthHeader from "@/components/auth/AuthHeader";
 export default function AuthLayout({ children }) {
   return (
     <div className="grid min-h-svh lg:grid-cols-2">

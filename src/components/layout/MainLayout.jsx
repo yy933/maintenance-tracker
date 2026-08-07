@@ -1,6 +1,6 @@
 import { Outlet, Navigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import { AppSidebar } from "@/components/app-sidebar";
+import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { ModeToggle } from "../ModeToggle";
 import { Separator } from "@/components/ui/separator";
 import {

@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/sidebar";
 import { ChevronsUpDownIcon, BadgeCheckIcon, LogOutIcon } from "lucide-react";
 
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/components/ui/toast";
 import { getInitials } from "@/lib/utils";
@@ -69,7 +69,9 @@ export function NavUser() {
               <DropdownMenuLabel className="p-0 font-normal">
                 <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                   <Avatar>
-                    <AvatarFallback>{getInitials(user?.name ?? "")}</AvatarFallback>
+                    <AvatarFallback>
+                      {getInitials(user?.name ?? "")}
+                    </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-medium">{user?.name}</span>

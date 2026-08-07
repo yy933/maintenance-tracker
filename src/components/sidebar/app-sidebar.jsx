@@ -2,9 +2,9 @@
 
 import * as React from "react";
 
-import { NavMain } from "@/components/nav-main";
-import { NavUser } from "@/components/nav-user";
-import { SidebarHeaderRole } from "@/components/siderbar-header-role";
+import { NavMain } from "@/components/sidebar/nav-main";
+import { NavUser } from "@/components/sidebar/nav-user";
+import { SidebarHeaderRole } from "@/components/sidebar/siderbar-header-role";
 import {
   Sidebar,
   SidebarContent,

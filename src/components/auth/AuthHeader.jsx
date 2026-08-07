@@ -1,5 +1,5 @@
 import { Wrench } from "lucide-react";
-import { ModeToggle } from "./ModeToggle";
+import { ModeToggle } from "../ModeToggle";
 export default function AuthHeader() {
   return (
     <div className="flex items-center justify-between gap-2">
