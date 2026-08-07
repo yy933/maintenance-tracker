@@ -148,6 +148,22 @@ export default function AuthContextProvider({ children }) {
     }
   };
 
+  // send password reset
+  const sendPasswordResetEmail = async (email) => {
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+      return { success: !error, error: error?.message };
+    } catch (error) {
+      console.error("Unexpected error during password reset: ", error.message);
+      return {
+        success: false,
+        error: "An unexpected error occurred. Please try again.",
+      };
+    }
+  };
+
   const user = session?.user
     ? {
         id: session.user.id,
@@ -166,6 +182,7 @@ export default function AuthContextProvider({ children }) {
         signInWithGoogle,
         signOutUser,
         signUpNewUser,
+        sendPasswordResetEmail,
       }}
     >
       {!loading && children}

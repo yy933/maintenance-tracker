@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Signin from "./components/auth/Signin";
 import Signup from "./components/auth/Signup";
+import ForgotPassword from "./components/auth/ForgotPassword";
 import Dashboard from "./components/dashboard/Dashboard";
 import RootRedirect from "./routes/RootRedirect";
 import MainLayout from "./components/layout/MainLayout";
@@ -19,6 +20,10 @@ export const router = createBrowserRouter([
   {
     path: "/signin",
     element: <Signin />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />,
   },
   /* ================= Protected routes ================= */
   {
