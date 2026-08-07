@@ -1,4 +1,5 @@
 import { useActionState } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import AuthLayout from "@/components/layout/AuthLayout";
 import { Button } from "@/components/ui/button";
@@ -11,7 +12,11 @@ export default function ForgotPassword() {
     async (prevState, formData) => {
       const email = formData.get("email");
       if (!email) {
-        return { success: false, error: "Please enter your email address.", message: null };
+        return {
+          success: false,
+          error: "Please enter your email address.",
+          message: null,
+        };
       }
       const { success, error: resetError } =
         await sendPasswordResetEmail(email);
@@ -90,6 +95,9 @@ export default function ForgotPassword() {
               {isPending ? "Sending password reset email..." : "Reset Password"}
             </Button>
           </Field>
+          <Link to="/signin" className=" text-sm text-foreground hover:underline dark:text-muted-foreground px-6 text-center">
+            Back to sign in
+          </Link>
         </FieldGroup>
       </form>
     </AuthLayout>
