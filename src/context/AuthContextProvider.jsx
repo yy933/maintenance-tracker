@@ -156,6 +156,22 @@ export default function AuthContextProvider({ children }) {
       });
       return { success: !error, error: error?.message };
     } catch (error) {
+      console.error("Unexpected error during sending reset password email: ", error.message);
+      return {
+        success: false,
+        error: "An unexpected error occurred. Please try again.",
+      };
+    }
+  };
+
+  const resetPassword = async (email, newPassword) => {
+    try {
+      const { data, error } = await supabase.auth.updateUser({
+        email,
+        password: newPassword,
+      });
+      return { success: !error, data, error: error?.message };
+    } catch (error) {
       console.error("Unexpected error during password reset: ", error.message);
       return {
         success: false,
@@ -183,6 +199,7 @@ export default function AuthContextProvider({ children }) {
         signOutUser,
         signUpNewUser,
         sendPasswordResetEmail,
+        resetPassword,
       }}
     >
       {!loading && children}

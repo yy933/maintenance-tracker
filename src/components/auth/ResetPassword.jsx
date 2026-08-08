@@ -12,7 +12,8 @@ import { Input } from "@/components/ui/input";
 import { AlertCircle } from "lucide-react";
 
 export default function ResetPassword() {
- 
+  const { resetPassword } = useAuth();
+
   return (
     <AuthLayout>
       <form
